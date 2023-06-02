@@ -168,10 +168,10 @@ class ViewController: NSViewController {
         txt_y.stringValue = String(Int(y))
         txt_k.stringValue = String(Int(k))
         
-        txt_c_norm.stringValue = String(Double(c) / 255)
-        txt_m_norm.stringValue = String(Double(m) / 255)
-        txt_y_norm.stringValue = String(Double(y) / 255)
-        txt_k_norm.stringValue = String(Double(k) / 255)
+        txt_c_norm.stringValue = String(round(Double(c) / 255 * 10000) / 10000)
+        txt_m_norm.stringValue = String(round(Double(m) / 255 * 10000) / 10000)
+        txt_y_norm.stringValue = String(round(Double(y) / 255 * 10000) / 10000)
+        txt_k_norm.stringValue = String(round(Double(k) / 255 * 10000) / 10000)
         
         let c_s = String(format: "%02X", Int32(c))
         let m_s = String(format: "%02X", Int32(m))
