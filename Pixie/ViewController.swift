@@ -13,14 +13,27 @@ class ViewController: NSViewController {
     @IBOutlet var txt_coord_y: NSTextField!
     @IBOutlet var cw_color: NSColorWell!
     @IBOutlet var txt_color_hex: NSTextField!
+    @IBOutlet var txt_color_css: NSTextField!
+    
     @IBOutlet var txt_r: NSTextField!
     @IBOutlet var txt_g: NSTextField!
     @IBOutlet var txt_b: NSTextField!
+    
+    @IBOutlet var txt_r_norm: NSTextField!
+    @IBOutlet var txt_g_norm: NSTextField!
+    @IBOutlet var txt_b_norm: NSTextField!
+    
     @IBOutlet var txt_color_hex_cmyk: NSTextField!
     @IBOutlet var txt_c: NSTextField!
     @IBOutlet var txt_m: NSTextField!
     @IBOutlet var txt_y: NSTextField!
     @IBOutlet var txt_k: NSTextField!
+    
+    @IBOutlet var txt_c_norm: NSTextField!
+    @IBOutlet var txt_m_norm: NSTextField!
+    @IBOutlet var txt_y_norm: NSTextField!
+    @IBOutlet var txt_k_norm: NSTextField!
+    
     @IBOutlet var txt_go_x: NSTextField!
     @IBOutlet var txt_go_y: NSTextField!
     @IBOutlet var btn_grab_color: NSButton!
@@ -65,8 +78,8 @@ class ViewController: NSViewController {
     }
     
     func setMouseMovedHooks() {
-        globalMouseMovedHookEvent = NSEvent.addGlobalMonitorForEvents(matching: NSEventMask.mouseMoved, handler: globalMouseMoveHook)
-        localMouseMovedHookEvent = NSEvent.addLocalMonitorForEvents(matching: NSEventMask.mouseMoved, handler: localMouseMoveHook)
+        globalMouseMovedHookEvent = NSEvent.addGlobalMonitorForEvents(matching: NSEvent.EventTypeMask.mouseMoved, handler: globalMouseMoveHook)
+        localMouseMovedHookEvent = NSEvent.addLocalMonitorForEvents(matching: NSEvent.EventTypeMask.mouseMoved, handler: localMouseMoveHook)
     }
     
     func unSetMouseMovedHooks() {
@@ -75,8 +88,8 @@ class ViewController: NSViewController {
     }
     
     func setMouseLeftDownHooks() {
-        globalMouseLeftDownHookEvent = NSEvent.addGlobalMonitorForEvents(matching: NSEventMask.leftMouseDown, handler: globalMouseLeftDownHook)
-        localMouseLeftDownHookEvent = NSEvent.addLocalMonitorForEvents(matching: NSEventMask.leftMouseDown, handler: localMouseLeftDownHook)
+        globalMouseLeftDownHookEvent = NSEvent.addGlobalMonitorForEvents(matching: NSEvent.EventTypeMask.leftMouseDown, handler: globalMouseLeftDownHook)
+        localMouseLeftDownHookEvent = NSEvent.addLocalMonitorForEvents(matching: NSEvent.EventTypeMask.leftMouseDown, handler: localMouseLeftDownHook)
     }
     
     func unSetMouseLeftDownHooks() {
@@ -85,7 +98,7 @@ class ViewController: NSViewController {
     }
     
     func nsptReverseY(pt: NSPoint) -> NSPoint {
-        let new_y = (NSScreen.main()?.frame.size.height)! - pt.y
+        let new_y = (NSScreen.main?.frame.size.height)! - pt.y
         let new_pt = NSPoint(x: pt.x, y: new_y)
         return new_pt
     }
@@ -123,7 +136,7 @@ class ViewController: NSViewController {
     }
     
     func update_ui() {
-        let coords = nsptReverseY(pt: NSEvent.mouseLocation())
+        let coords = nsptReverseY(pt: NSEvent.mouseLocation)
         txt_coord_x.intValue = Int32(coords.x)
         txt_coord_y.intValue = Int32(coords.y)
         var color = getColorAt(coords: coords)
@@ -135,10 +148,16 @@ class ViewController: NSViewController {
         txt_r.stringValue = String(Int(r))
         txt_g.stringValue = String(Int(g))
         txt_b.stringValue = String(Int(b))
+        
+        txt_r_norm.stringValue = String(round(Double(r) / 255 * 10000) / 10000)
+        txt_g_norm.stringValue = String(round(Double(g) / 255 * 10000) / 10000)
+        txt_b_norm.stringValue = String(round(Double(b) / 255 * 10000) / 10000)
+        
         let r_s = String(format: "%02X", Int32(r))
         let g_s = String(format: "%02X", Int32(g))
         let b_s = String(format: "%02X", Int32(b))
         txt_color_hex.stringValue = "#" + r_s + g_s + b_s
+        txt_color_css.stringValue = String(format: "rgb(%d, %d, %d)", Int32(r), Int32(g), Int32(b))
         color = color.usingColorSpace(NSColorSpace.genericCMYK)!
         let c = Float(color.cyanComponent) * Float(255.99999)
         let m = Float(color.magentaComponent) * Float(255.99999)
@@ -148,6 +167,12 @@ class ViewController: NSViewController {
         txt_m.stringValue = String(Int(m))
         txt_y.stringValue = String(Int(y))
         txt_k.stringValue = String(Int(k))
+        
+        txt_c_norm.stringValue = String(Double(c) / 255)
+        txt_m_norm.stringValue = String(Double(m) / 255)
+        txt_y_norm.stringValue = String(Double(y) / 255)
+        txt_k_norm.stringValue = String(Double(k) / 255)
+        
         let c_s = String(format: "%02X", Int32(c))
         let m_s = String(format: "%02X", Int32(m))
         let y_s = String(format: "%02X", Int32(y))
