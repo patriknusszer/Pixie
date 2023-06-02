@@ -496,6 +496,7 @@
 				9BFBFE251E75F447007597EF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9BFBFE261E75F447007597EF /* Build configuration list for PBXNativeTarget "PixieTests" */ = {
 			isa = XCConfigurationList;
@@ -504,6 +505,7 @@
 				9BFBFE281E75F447007597EF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9BFBFE291E75F447007597EF /* Build configuration list for PBXNativeTarget "PixieUITests" */ = {
 			isa = XCConfigurationList;
@@ -512,6 +514,7 @@
 				9BFBFE2B1E75F447007597EF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
